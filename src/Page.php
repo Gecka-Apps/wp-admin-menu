@@ -52,6 +52,14 @@ class Page
     private ?string $capability = null;
 
     /**
+     * Whether the page belongs to the network admin, null for the admin of
+     * the site.
+     *
+     * @var bool|null
+     */
+    private ?bool $network = null;
+
+    /**
      * Whether the body takes the wide width, for lists and charts, null
      * for the narrow one.
      *
@@ -81,6 +89,32 @@ class Page
     {
         $this->slug = $slug;
         $this->menu = $menu;
+    }
+
+    /**
+     * Puts a page under Settings in the network admin of a multisite, under
+     * its Settings menu, instead of the admin of a site. A page of a menu
+     * follows its menu. The first value given stays.
+     *
+     * @param bool $network
+     *
+     * @return $this
+     */
+    public function network(bool $network = true): static
+    {
+        $this->network ??= $network;
+
+        return $this;
+    }
+
+    /**
+     * Whether the page belongs to the network admin
+     *
+     * @return bool
+     */
+    public function isNetwork(): bool
+    {
+        return $this->menu ? $this->menu->isNetwork() : ($this->network ?? false);
     }
 
     /**
@@ -219,6 +253,10 @@ class Page
 
         if ($tab !== null && count($this->tabs) > 1) {
             $query[self::TAB_ARG] = $tab;
+        }
+
+        if ($this->isNetwork()) {
+            return add_query_arg(array_merge($query, $args), network_admin_url($this->menu ? 'admin.php' : 'settings.php'));
         }
 
         return add_query_arg(array_merge($query, $args), admin_url($this->menu ? 'admin.php' : 'options-general.php'));

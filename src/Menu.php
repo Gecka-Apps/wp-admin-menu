@@ -48,6 +48,14 @@ class Menu
     private ?string $capability = null;
 
     /**
+     * Whether the menu belongs to the network admin, null for the admin of
+     * the site.
+     *
+     * @var bool|null
+     */
+    private ?bool $network = null;
+
+    /**
      * The pages, by slug.
      *
      * @var array<string, Page>
@@ -128,6 +136,23 @@ class Menu
     public function capability(string $capability): static
     {
         $this->capability ??= $capability;
+
+        return $this;
+    }
+
+    /**
+     * Puts the menu in the network admin of a multisite instead of the
+     * admin of a site. The first value given stays. On a single site, a
+     * network menu goes to the admin of the site, which is where the
+     * network admin is.
+     *
+     * @param bool $network
+     *
+     * @return $this
+     */
+    public function network(bool $network = true): static
+    {
+        $this->network ??= $network;
 
         return $this;
     }
@@ -214,5 +239,15 @@ class Menu
     public function getCapability(): string
     {
         return $this->capability ?? 'manage_options';
+    }
+
+    /**
+     * Whether the menu belongs to the network admin
+     *
+     * @return bool
+     */
+    public function isNetwork(): bool
+    {
+        return $this->network ?? false;
     }
 }

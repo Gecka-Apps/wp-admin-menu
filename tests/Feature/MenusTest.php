@@ -16,10 +16,59 @@ beforeEach(function () {
     $admin_page_hooks = [];
     wp_set_current_user(static::factory()->user->create(['role' => 'administrator']));
     require_once ABSPATH . 'wp-admin/includes/plugin.php';
+    require_once ABSPATH . 'wp-admin/includes/screen.php';
+    require_once ABSPATH . 'wp-admin/includes/class-wp-screen.php';
 });
 
-it('hooks the registry up once booted', function () {
-    expect(has_action('admin_menu', [Menus::instance(), 'register']))->toBe(Menus::PRIORITY);
+it('hooks the registry up once booted, on the admin of a site and on the network admin', function () {
+    expect(has_action('admin_menu', [Menus::instance(), 'register']))->toBe(Menus::PRIORITY)
+        ->and(has_action('network_admin_menu', [Menus::instance(), 'register']))->toBe(Menus::PRIORITY);
+});
+
+it('adds a network menu and a network settings page to the network admin only', function () {
+    global $menu, $submenu;
+
+    $net = Menus::menu('net-' . __LINE__)->title('Network')->network();
+    $net->page('net-stats')->title('Statistics')->tab('t')->render(fn() => null);
+    $options = Menus::options('net-opts-' . __LINE__)->title('Options')->network();
+    $options->tab('settings')->render(fn() => null);
+    $site = Menus::menu('site-' . __LINE__)->title('Site');
+    $site->page('site-stats')->title('Statistics')->tab('t')->render(fn() => null);
+
+    set_current_screen('dashboard');
+    Menus::instance()->register();
+
+    expect(array_column($menu, 2))->toContain('site-stats')
+        ->and(array_column($menu, 2))->not->toContain('net-stats')
+        ->and($submenu)->not->toHaveKey('settings.php');
+
+    $menu = [];
+    $submenu = [];
+    set_current_screen('dashboard-network');
+    Menus::instance()->register();
+
+    expect(array_column($menu, 2))->toContain('net-stats')
+        ->and(array_column($menu, 2))->not->toContain('site-stats')
+        ->and(array_column($submenu['settings.php'] ?? [], 2))->toContain($options->slug())
+        ->and($net->page('net-stats')->isNetwork())->toBeTrue()
+        ->and($site->page('site-stats')->isNetwork())->toBeFalse()
+        ->and($net->page('net-stats')->url())->toContain('admin.php?page=net-stats')
+        ->and($options->url())->toContain('page=' . $options->slug());
+
+    set_current_screen('dashboard');
+});
+
+it('finds the current page behind the suffix the network admin adds to a screen', function () {
+    $net = Menus::menu('cur-' . __LINE__)->title('Current')->network();
+    $net->page('cur-page')->title('Page')->tab('t')->render(fn() => null);
+
+    set_current_screen('dashboard-network');
+    Menus::instance()->register();
+    set_current_screen($net->page('cur-page')->hook() . '-network');
+
+    expect(Menus::current())->toBe($net->page('cur-page'));
+
+    set_current_screen('dashboard');
 });
 
 it('adds a menu opening on its first page, the pages in their order and by their own slug', function () {

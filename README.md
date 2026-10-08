@@ -7,7 +7,7 @@ A plugin declares a menu, a page under it and its tab. Another plugin declares t
 ## Requirements
 
 - PHP 8.2 or later
-- WordPress 6.3 or later, in the admin of a site (the network admin of a multisite is not covered)
+- WordPress 6.3 or later, in the admin of a site or, for a menu marked `network()`, in the network admin of a multisite
 - The library installed through Composer inside a plugin or a must-use plugin, not a theme: its stylesheet and script are served with `plugins_url()`
 
 ## Install
@@ -77,6 +77,7 @@ A tab belongs to the plugin that brings it: its title, order, badge, `load` and 
 | `icon(string)` | A Dashicons class, a `data:` URL or `'none'`. `dashicons-admin-generic` until given. |
 | `position(int\|float)` | Place in the sidebar. |
 | `capability(string)` | Capability the pages ask for unless they name their own. |
+| `network(bool = true)` | Puts the menu in the network admin of a multisite instead of the admin of each site. Its pages follow. |
 | `page(string $slug)` | A page of the menu. Its slug is the `page` query argument, unique across the site. |
 
 ### `Page`
@@ -87,6 +88,7 @@ A tab belongs to the plugin that brings it: its title, order, badge, `load` and 
 | `order(int)` | Place among the pages of the menu, lowest first, 10 by default. The menu opens on the first page the user may see. |
 | `wide(bool = true)` | Body 1400px wide instead of 800px, for lists and charts. |
 | `capability(string)` | Capability the tabs ask for unless they name their own. |
+| `network(bool = true)` | For a page under Settings: puts it under the Settings menu of the network admin instead of Settings of each site. |
 | `tab(string $slug)` | A tab of the page. |
 | `url(?string $tab = null, array $args = [])` | Address of the page, on a tab, with more query arguments. |
 | `hook()` | Name of the screen of the page once added, empty before `admin_menu`. |
@@ -114,6 +116,10 @@ A tab asks for the capability it names, or else the one of its page, or else the
 ## Screens
 
 The screen of a page under a menu is named `{menu}_page_{page}` after the slugs, whatever the title, its translation or the badge. The page the menu opens on is `toplevel_page_{page}`, and which page that is depends on what the user may see. Pages under Settings are `settings_page_{page}`. To act on a screen, ask `Menus::current()` or `$page->hook()` rather than writing its name.
+
+## Network admin
+
+A menu marked `network()` and a page under Settings marked `network()` are added on `network_admin_menu` instead of `admin_menu`, and their addresses come from `network_admin_url()`. Nothing else changes: the same tabs, the same layout, the same `load` and `render`. On a single site, where the network admin is the admin, they land in the admin of the site. A plugin that keeps everything at the network level declares its menu with `->network(is_multisite())`. The form of a settings page in the network admin cannot post to `options.php`, which does not exist there: post it to `edit.php?action=…` of the network admin and save on `network_admin_edit_{action}`.
 
 ## Layout
 

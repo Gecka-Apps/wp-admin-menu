@@ -12,15 +12,17 @@ namespace Gecka\WP\AdminMenu;
  * A plugin declares what it brings from plugins_loaded on, or on the
  * gecka_admin_menu action fired just before the pages are added. The first
  * plugin to name a menu sets its title, icon and position; the next ones
- * add their pages and tabs to it, or their tabs to its pages.
+ * add their pages and tabs to it, or their tabs to its pages. A menu or a
+ * page under Settings marked network goes to the network admin of a
+ * multisite, the others to the admin of each site.
  *
  * @author Laurent Dinclaux - Gecka <laurent@gecka.nc>
  */
 class Menus
 {
     /**
-     * Priority on admin_menu at which the pages are added. Declarations
-     * made on admin_menu must come before it.
+     * Priority on admin_menu and network_admin_menu at which the pages are
+     * added. Declarations made on those must come before it.
      */
     public const PRIORITY = 9;
 
@@ -103,7 +105,9 @@ class Menus
     }
 
     /**
-     * The page shown on the current screen, if it is one of ours
+     * The page shown on the current screen, if it is one of ours. The
+     * network admin suffixes the ids of its screens, the hooks of the pages
+     * carry none.
      *
      * @return Page|null
      */
@@ -111,7 +115,11 @@ class Menus
     {
         $screen = function_exists('get_current_screen') ? get_current_screen() : null;
 
-        return $screen ? (self::instance()->screens[$screen->id] ?? null) : null;
+        if (! $screen) {
+            return null;
+        }
+
+        return self::instance()->screens[(string) preg_replace('/-(network|user)$/', '', $screen->id)] ?? null;
     }
 
     /**
@@ -128,6 +136,7 @@ class Menus
         $this->directory = $directory;
 
         add_action('admin_menu', [$this, 'register'], self::PRIORITY);
+        add_action('network_admin_menu', [$this, 'register'], self::PRIORITY);
         add_filter('admin_body_class', [$this, 'bodyClass']);
     }
 
@@ -152,7 +161,8 @@ class Menus
     }
 
     /**
-     * Adds the menus and the pages to the admin.
+     * Adds the menus and the pages to the admin being drawn: those marked
+     * network to the network admin, the others to the admin of the site.
      *
      * @return void
      */
@@ -166,16 +176,22 @@ class Menus
          */
         do_action('gecka_admin_menu', $this);
 
+        $network = is_network_admin();
+
         foreach ($this->menus as $menu) {
-            $this->addMenu($menu);
+            if ($menu->isNetwork() === $network) {
+                $this->addMenu($menu);
+            }
         }
 
         foreach ($this->options as $page) {
-            if ($page->visibleCapability() === '') {
+            if ($page->isNetwork() !== $network || $page->visibleCapability() === '') {
                 continue;
             }
 
-            $hook = add_options_page($page->getTitle(), $page->getMenuTitle(), $page->visibleCapability(), $page->slug(), [$page, 'render']);
+            $hook = $network
+                ? add_submenu_page('settings.php', $page->getTitle(), $page->getMenuTitle(), $page->visibleCapability(), $page->slug(), [$page, 'render'])
+                : add_options_page($page->getTitle(), $page->getMenuTitle(), $page->visibleCapability(), $page->slug(), [$page, 'render']);
             $this->addScreen($hook, $page);
         }
     }
