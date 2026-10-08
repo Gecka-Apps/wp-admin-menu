@@ -5,4 +5,4 @@
 
 // Version of this copy of the library, read by bootstrap.php of whichever
 // copy runs first. Bumped with each release.
-return '1.0.2';
+return '1.0.3';
