@@ -1,0 +1,220 @@
+/*
+ * SPDX-FileCopyrightText: 2026 Gecka <contact@gecka.nc>
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *
+ * The pages of the shared admin menu: a header band across the screen with
+ * the title and the tabs, the content centred below it, checkboxes drawn as
+ * toggles, buttons in a row. No colour is written here: the accent is the
+ * primary colour of the admin colour scheme, the neutral tones are mixed from
+ * the colour of the text, and white surfaces come from the classes of
+ * WordPress itself (card, privacy-settings-header, widefat).
+ */
+.gecka-admin-page {
+    --gecka-admin-grid: color-mix(in srgb, currentColor 15%, transparent);
+    --gecka-admin-muted: color-mix(in srgb, currentColor 75%, transparent);
+    --gecka-admin-stripe: color-mix(in srgb, currentColor 4%, Canvas);
+    --gecka-admin-width: 800px;
+    --gecka-admin-gutter: 20px;
+}
+
+.gecka-admin-page.is-wide {
+    --gecka-admin-width: 1100px;
+}
+
+/* Page: a header band across the screen, the content centred below it. */
+
+.gecka-admin-screen #wpcontent,
+.gecka-admin-screen.auto-fold #wpcontent {
+    padding-inline-start: 0;
+}
+
+.gecka-admin-screen #wpbody-content > .notice,
+.gecka-admin-screen #wpbody-content > .update-nag {
+    margin-inline: 20px;
+}
+
+/*
+ * The Screen Options and Help panels open above the band, edge to edge and
+ * white like it, the band having no gutter for their margins to match.
+ */
+.gecka-admin-screen #screen-meta {
+    border-inline: 0;
+    margin: 0;
+}
+
+/*
+ * The band and the tabs are those of the Privacy screen of WordPress. The
+ * Screen Options and Help buttons of WordPress float at the top of the
+ * content, ahead of the band, which therefore starts under them: its white
+ * reaches up to the admin bar, and the title goes below their row, 32px
+ * tall, centred on the full width. The row is kept on every screen, so
+ * that the title stands at the same place with or without the buttons.
+ */
+.gecka-admin-page-header {
+    margin: 0 0 16px;
+    padding-top: 32px;
+}
+
+.gecka-admin-page-header h1 {
+    display: inline-block;
+    font-size: 23px;
+    font-weight: 600;
+    line-height: 1.3;
+    margin: 0 0.8rem 1rem;
+    padding: 9px 0 4px;
+}
+
+.gecka-admin-page-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.gecka-admin-page-tab {
+    white-space: nowrap;
+}
+
+.gecka-admin-page-tab:hover {
+    color: var(--wp-admin-theme-color);
+}
+
+.gecka-admin-page-tab .awaiting-mod {
+    margin-inline-start: 4px;
+    vertical-align: 1px;
+}
+
+.gecka-admin-page-body {
+    box-sizing: border-box;
+    margin-inline: auto;
+    max-width: var(--gecka-admin-width);
+    padding: 0 var(--gecka-admin-gutter) 20px;
+}
+
+/* A notice lines up with the content of the body, padding excluded. */
+.gecka-admin-page > .notice {
+    margin-inline: calc(max(0px, (100% - var(--gecka-admin-width)) / 2) + var(--gecka-admin-gutter));
+}
+
+.gecka-admin-page-body h2 {
+    line-height: 1.4;
+    padding: 1rem 0 0;
+}
+
+.gecka-admin-page-body .form-table th {
+    width: 240px;
+}
+
+/* Toggles: a checkbox drawn as a switch, its label next to it. */
+
+.gecka-admin-toggle-label,
+.form-table td fieldset label.gecka-admin-toggle-label {
+    display: block;
+    margin: 0 0 8px !important;
+}
+
+input[type="checkbox"].gecka-admin-toggle {
+    appearance: none;
+    background: color-mix(in srgb, currentColor 65%, Canvas);
+    border: 0;
+    border-radius: 9px;
+    box-shadow: inset 0 0 6px color-mix(in srgb, currentColor 15%, transparent);
+    cursor: pointer;
+    height: 18px;
+    margin: -2px 0 0;
+    margin-inline-end: 6px;
+    position: relative;
+    transition: background-color 0.15s ease;
+    vertical-align: middle;
+    width: 36px;
+}
+
+input[type="checkbox"].gecka-admin-toggle::before {
+    background: Canvas;
+    border-radius: 50%;
+    content: "";
+    height: 14px;
+    inset-inline-start: 2px;
+    margin: 0;
+    position: absolute;
+    top: 2px;
+    transition: inset-inline-start 0.15s ease;
+    width: 14px;
+}
+
+input[type="checkbox"].gecka-admin-toggle:checked {
+    background: var(--wp-admin-theme-color);
+}
+
+input[type="checkbox"].gecka-admin-toggle:checked::before {
+    content: "";
+    inset-inline-start: 20px;
+}
+
+input[type="checkbox"].gecka-admin-toggle:focus {
+    box-shadow: inset 0 0 6px color-mix(in srgb, currentColor 15%, transparent);
+    outline: none;
+}
+
+input[type="checkbox"].gecka-admin-toggle:focus-visible {
+    outline: 2px solid var(--wp-admin-theme-color);
+    outline-offset: 2px;
+}
+
+input[type="checkbox"].gecka-admin-toggle:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .gecka-admin-page-tab,
+    input[type="checkbox"].gecka-admin-toggle,
+    input[type="checkbox"].gecka-admin-toggle::before {
+        transition: none;
+    }
+}
+
+/* Buttons in a row, as WordPress lays them out: inline blocks parted by white space. */
+.gecka-admin-buttons {
+    margin: 16px 0 24px;
+}
+
+.gecka-admin-buttons > form {
+    display: inline-block;
+    margin: 0 4px 8px 0;
+    vertical-align: top;
+}
+
+.gecka-admin-buttons > .button {
+    margin: 0 4px 8px 0;
+}
+
+.gecka-admin-choice,
+.form-table td fieldset label.gecka-admin-choice {
+    display: block;
+    margin: 0 0 6px !important;
+}
+
+.gecka-admin-help-link {
+    font-size: 13px;
+    font-weight: 400;
+    margin-inline-start: 8px;
+}
+
+.gecka-admin-page .tablenav .actions select {
+    max-width: none;
+}
+
+@media screen and (max-width: 782px) {
+    .gecka-admin-page {
+        --gecka-admin-gutter: 12px;
+    }
+
+    .gecka-admin-page-header h1 {
+        margin-bottom: 0.5rem;
+    }
+
+    .gecka-admin-page-tab {
+        margin: 0;
+        padding: 0.5rem 0.6rem 0.8rem;
+    }
+}

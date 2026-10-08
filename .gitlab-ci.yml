@@ -1,0 +1,40 @@
+stages:
+  - test
+
+variables:
+  COMPOSER_CACHE_DIR: $CI_PROJECT_DIR/.composer-cache
+
+.composer:
+  stage: test
+  cache:
+    key: composer-$CI_JOB_IMAGE
+    paths:
+      - .composer-cache
+  before_script:
+    - composer install --no-interaction --no-progress --prefer-dist
+
+lint:
+  extends: .composer
+  image: stayallive/php:8.5
+  script:
+    - composer lint:php
+    - composer analyse
+
+# The oldest PHP the library supports: PHPStan reads the code for it, this
+# job has the parser of that version run it.
+syntax:php8.2:
+  stage: test
+  image: stayallive/php:8.2
+  script:
+    - find bootstrap.php version.php src -name '*.php' -print0 | xargs -0 -n1 php -l
+
+# The tests run in a WordPress the suite installs, on SQLite. Pest 4 needs
+# PHP 8.3, so 8.2 is left to PHPStan and to the syntax job.
+test:
+  extends: .composer
+  image: stayallive/php:$PHP
+  parallel:
+    matrix:
+      - PHP: ['8.3', '8.4', '8.5']
+  script:
+    - composer test

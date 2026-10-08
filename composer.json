@@ -1,0 +1,72 @@
+{
+    "name": "gecka/wp-admin-menu",
+    "description": "A top-level WordPress admin menu several plugins share: pages made of tabs each plugin brings, rendered in one layout.",
+    "type": "library",
+    "license": "GPL-3.0-or-later",
+    "keywords": [
+        "wordpress",
+        "admin",
+        "menu",
+        "settings-page"
+    ],
+    "homepage": "https://github.com/Gecka-Apps/wp-admin-menu",
+    "authors": [
+        {
+            "name": "Laurent Dinclaux",
+            "email": "laurent@gecka.nc"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/Gecka-Apps/wp-admin-menu/issues",
+        "source": "https://github.com/Gecka-Apps/wp-admin-menu"
+    },
+    "require": {
+        "php": ">=8.2"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.32",
+        "pestphp/pest": "^4.0",
+        "alleyinteractive/pest-plugin-wordpress": "^1.1",
+        "phpstan/phpstan": "^2.2",
+        "szepeviktor/phpstan-wordpress": "^2.0"
+    },
+    "autoload": {
+        "files": [
+            "bootstrap.php"
+        ],
+        "psr-4": {
+            "Gecka\\WP\\AdminMenu\\": "src/"
+        }
+    },
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        },
+        "platform": {
+            "php": "8.3.0"
+        }
+    },
+    "scripts": {
+        "format": "pint",
+        "lint:php": "pint --test",
+        "analyse": "phpstan analyse --no-progress --memory-limit=1G",
+        "test": "pest"
+    },
+    "archive": {
+        "exclude": [
+            "/vendor",
+            "/tests",
+            "/.tests",
+            "/phpunit.xml",
+            "/phpstan.neon",
+            "/pint.json",
+            "/composer.lock",
+            "/.gitignore",
+            "/.editorconfig",
+            "/.gitattributes",
+            "/.github",
+            "/.gitlab-ci.yml",
+            "/.idea"
+        ]
+    }
+}
