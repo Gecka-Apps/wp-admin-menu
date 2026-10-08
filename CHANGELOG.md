@@ -4,6 +4,13 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project
 follows [Semantic Versioning](https://semver.org/).
 
+## [1.1.0] - 2026-10-08
+
+### Changed
+
+- A help link, `gecka-admin-help-link`, shows as a question mark icon
+  instead of its text, which screen readers still announce.
+
 ## [1.0.3] - 2026-10-08
 
 ### Fixed
@@ -58,6 +65,7 @@ follows [Semantic Versioning](https://semver.org/).
 - The action `gecka_admin_menu`, fired before the pages are added, for late
   declarations.
 
+[1.1.0]: https://github.com/Gecka-Apps/wp-admin-menu/compare/v1.0.3...v1.1.0
 [1.0.3]: https://github.com/Gecka-Apps/wp-admin-menu/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/Gecka-Apps/wp-admin-menu/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/Gecka-Apps/wp-admin-menu/compare/v1.0.0...v1.0.1
