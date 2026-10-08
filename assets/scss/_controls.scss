@@ -22,10 +22,29 @@
     margin: 0 0 6px !important;
 }
 
+/*
+ * A link to a Help tab shows as a question mark. Its text stays in the link,
+ * at no size, as the name screen readers announce; a title gives the
+ * tooltip. The glyph is the editor-help icon of the Dashicons, with an empty
+ * alternative so that it is not read.
+ */
 .gecka-admin-help-link {
-    font-size: 13px;
-    font-weight: 400;
-    margin-inline-start: 8px;
+    border-radius: 50%;
+    display: inline-block;
+    font-size: 0;
+    line-height: 1;
+    margin-inline-start: 6px;
+    text-decoration: none;
+    vertical-align: middle;
+
+    &::before {
+        content: "\f223" / "";
+        display: inline-block;
+        font: normal 20px/1 dashicons;
+        height: 20px;
+        width: 20px;
+        -webkit-font-smoothing: antialiased;
+    }
 }
 
 .gecka-admin-page .tablenav .actions select {

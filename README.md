@@ -124,7 +124,7 @@ Classes to reuse inside a tab:
 - `gecka-admin-toggle` on a checkbox drawn as a switch, `gecka-admin-toggle-label` on its label
 - `gecka-admin-choice` on the label of a radio button
 - `gecka-admin-buttons` on a row of buttons, or of forms holding one
-- `gecka-admin-help-link` on a link that opens a Help tab, named by `data-help-tab="<tab id>"`
+- `gecka-admin-help-link` on a link that opens a Help tab, named by `data-help-tab="<tab id>"`. It shows as a question mark: write its text all the same ("Learn more"), which screen readers announce, and repeat it in a `title` for the tooltip
 
 No colour is written: the accent is the one of the admin colour scheme, and the neutral tones are mixed from the colour of the text.
 
