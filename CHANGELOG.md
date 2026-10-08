@@ -4,6 +4,14 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project
 follows [Semantic Versioning](https://semver.org/).
 
+## [1.2.0] - 2026-10-09
+
+### Added
+
+- `Menu::network()` and `Page::network()`: a menu, or a page under
+  Settings, added to the network admin of a multisite instead of the admin
+  of each site, with addresses from `network_admin_url()`.
+
 ## [1.1.0] - 2026-10-08
 
 ### Changed
