@@ -4,6 +4,18 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project
 follows [Semantic Versioning](https://semver.org/).
 
+## [1.0.1] - 2026-10-08
+
+### Fixed
+
+- Notices no longer show above the header band while the page loads:
+  they stay hidden until WordPress moves them under it.
+
+### Added
+
+- The SCSS sources of the stylesheet, in `assets/scss/`. The compiled
+  `assets/admin.css` still ships with the package.
+
 ## [1.0.0] - 2026-10-08
 
 ### Added
@@ -33,4 +45,5 @@ follows [Semantic Versioning](https://semver.org/).
 - The action `gecka_admin_menu`, fired before the pages are added, for late
   declarations.
 
+[1.0.1]: https://github.com/Gecka-Apps/wp-admin-menu/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/Gecka-Apps/wp-admin-menu/releases/tag/v1.0.0
