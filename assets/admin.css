@@ -17,7 +17,7 @@
   --gecka-admin-gutter: 20px;
 }
 .gecka-admin-page.is-wide {
-  --gecka-admin-width: 1100px;
+  --gecka-admin-width: 1400px;
 }
 @media screen and (max-width: 782px) {
   .gecka-admin-page {

@@ -85,7 +85,7 @@ A tab belongs to the plugin that brings it: its title, order, badge, `load` and 
 |---|---|
 | `title(string)` | Title in the band and in the sidebar. |
 | `order(int)` | Place among the pages of the menu, lowest first, 10 by default. The menu opens on the first page the user may see. |
-| `wide(bool = true)` | Body 1100px wide instead of 800px, for lists and charts. |
+| `wide(bool = true)` | Body 1400px wide instead of 800px, for lists and charts. |
 | `capability(string)` | Capability the tabs ask for unless they name their own. |
 | `tab(string $slug)` | A tab of the page. |
 | `url(?string $tab = null, array $args = [])` | Address of the page, on a tab, with more query arguments. |
