@@ -6,9 +6,16 @@
 
 /* Toggles: a checkbox drawn as a switch, its label next to it. */
 
+/*
+ * The text of a switch wraps beside it, not under it, also against the
+ * inline-block WordPress gives the first label of a cell on small screens.
+ */
 .gecka-admin-toggle-label,
-.form-table td fieldset label.gecka-admin-toggle-label {
-    display: block;
+.form-table td fieldset label.gecka-admin-toggle-label,
+.gecka-admin-page .form-table td > label.gecka-admin-toggle-label {
+    align-items: flex-start;
+    display: flex;
+    gap: 6px;
     margin: 0 0 8px !important;
 }
 
@@ -19,12 +26,11 @@ input[type="checkbox"].gecka-admin-toggle {
     border-radius: math.div($toggle-height, 2);
     box-shadow: $toggle-shadow;
     cursor: pointer;
+    flex: none;
     height: $toggle-height;
-    margin: -2px 0 0;
-    margin-inline-end: 6px;
+    margin: 1px 0 0;
     position: relative;
     transition: background-color $toggle-speed ease;
-    vertical-align: middle;
     width: $toggle-width;
 
     &::before {
