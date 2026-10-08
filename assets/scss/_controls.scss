@@ -1,0 +1,33 @@
+// SPDX-FileCopyrightText: 2026 Gecka <contact@gecka.nc>
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+/* Buttons in a row, as WordPress lays them out: inline blocks parted by white space. */
+.gecka-admin-buttons {
+    margin: 16px 0 24px;
+
+    > form {
+        display: inline-block;
+        margin: 0 4px 8px 0;
+        vertical-align: top;
+    }
+
+    > .button {
+        margin: 0 4px 8px 0;
+    }
+}
+
+.gecka-admin-choice,
+.form-table td fieldset label.gecka-admin-choice {
+    display: block;
+    margin: 0 0 6px !important;
+}
+
+.gecka-admin-help-link {
+    font-size: 13px;
+    font-weight: 400;
+    margin-inline-start: 8px;
+}
+
+.gecka-admin-page .tablenav .actions select {
+    max-width: none;
+}

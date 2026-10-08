@@ -11,5 +11,12 @@ indent_size = 4
 [*.yml]
 indent_size = 2
 
+[{package.json,package-lock.json}]
+indent_size = 2
+
+# Written by Sass, which indents with two spaces.
+[assets/admin.css]
+indent_size = 2
+
 [*.md]
 trim_trailing_whitespace = false

@@ -8,3 +8,5 @@
 /.editorconfig export-ignore
 /.github export-ignore
 /.gitlab-ci.yml export-ignore
+/package.json export-ignore
+/package-lock.json export-ignore

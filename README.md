@@ -145,6 +145,15 @@ composer test      # Pest, WordPress on SQLite in .tests/
 
 The tests need PHP 8.3 or later (Pest 4). PHP 8.2 is covered by PHPStan and by a syntax check in CI.
 
+The stylesheet is written in SCSS under `assets/scss/` and compiled into `assets/admin.css`, which is committed so that installing the library needs no build. After a change to the SCSS:
+
+```sh
+npm install
+npm run build      # or npm run watch
+```
+
+CI rebuilds it and fails when the committed `assets/admin.css` differs.
+
 A release bumps `version.php` along with the tag and adds its entry to `CHANGELOG.md`: the copies on a site are told apart by `version.php`, not by the tag.
 
 ## License

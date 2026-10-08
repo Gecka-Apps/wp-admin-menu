@@ -1,0 +1,14 @@
+{
+  "name": "gecka-wp-admin-menu",
+  "private": true,
+  "description": "Stylesheet of gecka/wp-admin-menu, built from assets/scss.",
+  "license": "GPL-3.0-or-later",
+  "author": "Laurent Dinclaux <laurent@gecka.nc>",
+  "scripts": {
+    "build": "sass --no-source-map --style=expanded assets/scss/admin.scss assets/admin.css",
+    "watch": "sass --no-source-map --style=expanded --watch assets/scss/admin.scss assets/admin.css"
+  },
+  "devDependencies": {
+    "sass": "^1.105.0"
+  }
+}

@@ -1,0 +1,128 @@
+// SPDX-FileCopyrightText: 2026 Gecka <contact@gecka.nc>
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+@use "settings" as *;
+
+.gecka-admin-page {
+    --gecka-admin-grid: color-mix(in srgb, currentColor 15%, transparent);
+    --gecka-admin-muted: color-mix(in srgb, currentColor 75%, transparent);
+    --gecka-admin-stripe: color-mix(in srgb, currentColor 4%, Canvas);
+    --gecka-admin-width: 800px;
+    --gecka-admin-gutter: 20px;
+
+    &.is-wide {
+        --gecka-admin-width: 1100px;
+    }
+
+    @media screen and (max-width: $mobile) {
+        --gecka-admin-gutter: 12px;
+    }
+}
+
+/* Page: a header band across the screen, the content centred below it. */
+
+.gecka-admin-screen {
+    #wpcontent,
+    &.auto-fold #wpcontent {
+        padding-inline-start: 0;
+    }
+
+    #wpbody-content > .notice,
+    #wpbody-content > .update-nag {
+        margin-inline: 20px;
+    }
+
+    /*
+     * WordPress prints the notices above the band, and its script moves them
+     * under it once the page is ready. Until then they stay hidden, with the
+     * selector of that script; the inline ones, which it leaves in place, stay
+     * visible, as do all of them without JavaScript.
+     */
+    &.js #wpbody-content > :is(div.updated, div.error, div.notice):not(.inline, .below-h2) {
+        display: none;
+    }
+
+    /*
+     * The Screen Options and Help panels open above the band, edge to edge and
+     * white like it, the band having no gutter for their margins to match.
+     */
+    #screen-meta {
+        border-inline: 0;
+        margin: 0;
+    }
+}
+
+/*
+ * The band and the tabs are those of the Privacy screen of WordPress. The
+ * Screen Options and Help buttons of WordPress float at the top of the
+ * content, ahead of the band, which therefore starts under them: its white
+ * reaches up to the admin bar, and the title goes below their row, 32px
+ * tall, centred on the full width. The row is kept on every screen, so
+ * that the title stands at the same place with or without the buttons.
+ */
+.gecka-admin-page-header {
+    margin: 0 0 16px;
+    padding-top: 32px;
+
+    h1 {
+        display: inline-block;
+        font-size: 23px;
+        font-weight: 600;
+        line-height: 1.3;
+        margin: 0 0.8rem 1rem;
+        padding: 9px 0 4px;
+
+        @media screen and (max-width: $mobile) {
+            margin-bottom: 0.5rem;
+        }
+    }
+}
+
+.gecka-admin-page-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.gecka-admin-page-tab {
+    white-space: nowrap;
+
+    &:hover {
+        color: var(--wp-admin-theme-color);
+    }
+
+    .awaiting-mod {
+        margin-inline-start: 4px;
+        vertical-align: 1px;
+    }
+
+    @media screen and (max-width: $mobile) {
+        margin: 0;
+        padding: 0.5rem 0.6rem 0.8rem;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        transition: none;
+    }
+}
+
+.gecka-admin-page-body {
+    box-sizing: border-box;
+    margin-inline: auto;
+    max-width: var(--gecka-admin-width);
+    padding: 0 var(--gecka-admin-gutter) 20px;
+
+    h2 {
+        line-height: 1.4;
+        padding: 1rem 0 0;
+    }
+
+    .form-table th {
+        width: 240px;
+    }
+}
+
+/* A notice lines up with the content of the body, padding excluded. */
+.gecka-admin-page > .notice {
+    margin-inline: calc(max(0px, (100% - var(--gecka-admin-width)) / 2) + var(--gecka-admin-gutter));
+}

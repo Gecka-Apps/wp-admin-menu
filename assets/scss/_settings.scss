@@ -1,0 +1,12 @@
+// SPDX-FileCopyrightText: 2026 Gecka <contact@gecka.nc>
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+// Width under which WordPress lays its admin out for small screens.
+$mobile: 782px;
+
+$toggle-width: 36px;
+$toggle-height: 18px;
+$toggle-gap: 2px;
+$toggle-knob: $toggle-height - 2 * $toggle-gap;
+$toggle-shadow: inset 0 0 6px color-mix(in srgb, currentColor 15%, transparent);
+$toggle-speed: 0.15s;

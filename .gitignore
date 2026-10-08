@@ -6,3 +6,4 @@
 *.iml
 .vscode/
 /composer.lock
+/node_modules/

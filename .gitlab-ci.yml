@@ -20,6 +20,16 @@ lint:
     - composer lint:php
     - composer analyse
 
+# assets/admin.css ships compiled, so that installing the library needs no
+# build: it must match what assets/scss gives.
+stylesheet:
+  stage: test
+  image: node:24
+  script:
+    - npm ci --no-fund --no-audit
+    - npm run build
+    - git diff --exit-code assets/admin.css
+
 # The oldest PHP the library supports: PHPStan reads the code for it, this
 # job has the parser of that version run it.
 syntax:php8.2:

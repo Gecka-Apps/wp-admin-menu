@@ -1,0 +1,73 @@
+// SPDX-FileCopyrightText: 2026 Gecka <contact@gecka.nc>
+// SPDX-License-Identifier: GPL-3.0-or-later
+
+@use "sass:math";
+@use "settings" as *;
+
+/* Toggles: a checkbox drawn as a switch, its label next to it. */
+
+.gecka-admin-toggle-label,
+.form-table td fieldset label.gecka-admin-toggle-label {
+    display: block;
+    margin: 0 0 8px !important;
+}
+
+input[type="checkbox"].gecka-admin-toggle {
+    appearance: none;
+    background: color-mix(in srgb, currentColor 65%, Canvas);
+    border: 0;
+    border-radius: math.div($toggle-height, 2);
+    box-shadow: $toggle-shadow;
+    cursor: pointer;
+    height: $toggle-height;
+    margin: -2px 0 0;
+    margin-inline-end: 6px;
+    position: relative;
+    transition: background-color $toggle-speed ease;
+    vertical-align: middle;
+    width: $toggle-width;
+
+    &::before {
+        background: Canvas;
+        border-radius: 50%;
+        content: "";
+        height: $toggle-knob;
+        inset-inline-start: $toggle-gap;
+        margin: 0;
+        position: absolute;
+        top: $toggle-gap;
+        transition: inset-inline-start $toggle-speed ease;
+        width: $toggle-knob;
+    }
+
+    &:checked {
+        background: var(--wp-admin-theme-color);
+
+        &::before {
+            content: "";
+            inset-inline-start: $toggle-width - $toggle-knob - $toggle-gap;
+        }
+    }
+
+    &:focus {
+        box-shadow: $toggle-shadow;
+        outline: none;
+    }
+
+    &:focus-visible {
+        outline: 2px solid var(--wp-admin-theme-color);
+        outline-offset: 2px;
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.5;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        &,
+        &::before {
+            transition: none;
+        }
+    }
+}

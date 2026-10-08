@@ -1,0 +1,17 @@
+/*
+ * SPDX-FileCopyrightText: 2026 Gecka <contact@gecka.nc>
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *
+ * The pages of the shared admin menu: a header band across the screen with
+ * the title and the tabs, the content centred below it, checkboxes drawn as
+ * toggles, buttons in a row. No colour is written here: the accent is the
+ * primary colour of the admin colour scheme, the neutral tones are mixed from
+ * the colour of the text, and white surfaces come from the classes of
+ * WordPress itself (card, privacy-settings-header, widefat).
+ */
+
+// Compiled into assets/admin.css by `npm run build`.
+
+@use "page";
+@use "toggle";
+@use "controls";
