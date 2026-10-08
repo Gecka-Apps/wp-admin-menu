@@ -34,6 +34,16 @@
 }
 
 /*
+ * WordPress prints the notices above the band, and its script moves them
+ * under it once the page is ready. Until then they stay hidden, with the
+ * selector of that script; the inline ones, which it leaves in place, stay
+ * visible, as do all of them without JavaScript.
+ */
+.js.gecka-admin-screen #wpbody-content > :is(div.updated, div.error, div.notice):not(.inline, .below-h2) {
+    display: none;
+}
+
+/*
  * The Screen Options and Help panels open above the band, edge to edge and
  * white like it, the band having no gutter for their margins to match.
  */
