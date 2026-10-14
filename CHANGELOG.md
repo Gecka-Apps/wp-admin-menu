@@ -4,6 +4,13 @@ All notable changes to this project are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project
 follows [Semantic Versioning](https://semver.org/).
 
+## [1.2.1] - 2026-10-14
+
+### Fixed
+
+- Pages unstyled when the copy of the library sits in the vendor directory
+  of the site: the stylesheet and the script are now printed inline.
+
 ## [1.2.0] - 2026-10-09
 
 ### Added
@@ -73,6 +80,8 @@ follows [Semantic Versioning](https://semver.org/).
 - The action `gecka_admin_menu`, fired before the pages are added, for late
   declarations.
 
+[1.2.1]: https://github.com/Gecka-Apps/wp-admin-menu/compare/v1.2.0...v1.2.1
+[1.2.0]: https://github.com/Gecka-Apps/wp-admin-menu/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/Gecka-Apps/wp-admin-menu/compare/v1.0.3...v1.1.0
 [1.0.3]: https://github.com/Gecka-Apps/wp-admin-menu/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/Gecka-Apps/wp-admin-menu/compare/v1.0.1...v1.0.2
