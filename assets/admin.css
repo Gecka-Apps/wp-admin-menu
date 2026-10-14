@@ -31,7 +31,7 @@
 }
 .gecka-admin-screen #wpbody-content > .notice,
 .gecka-admin-screen #wpbody-content > .update-nag {
-  margin-inline: 20px;
+  margin: 25px 20px 15px 22px;
 }
 .gecka-admin-screen {
   /*
