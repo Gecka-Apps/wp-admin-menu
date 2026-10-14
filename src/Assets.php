@@ -7,7 +7,10 @@ namespace Gecka\WP\AdminMenu;
 
 /**
  * The stylesheet of the pages and the script opening the Help from a link,
- * served from the copy of the library that runs.
+ * read from the copy of the library that runs and printed in the page. That
+ * copy may live in the vendor directory of a site rather than in a plugin,
+ * where the web server does not always serve it, or outside the document
+ * root: no address of the files is needed.
  *
  * @author Laurent Dinclaux - Gecka <laurent@gecka.nc>
  */
@@ -30,17 +33,35 @@ class Assets
      */
     public static function enqueue(): void
     {
-        wp_enqueue_style(self::STYLE, self::url('assets/admin.css'), [], Menus::instance()->version());
+        wp_register_style(self::STYLE, false, [], Menus::instance()->version());
+        wp_add_inline_style(self::STYLE, self::read('assets/admin.css'));
+        wp_enqueue_style(self::STYLE);
     }
 
     /**
-     * Enqueues the script.
+     * Enqueues the script, printed at the end of the page.
      *
      * @return void
      */
     public static function enqueueScript(): void
     {
-        wp_enqueue_script(self::SCRIPT, self::url('assets/help.js'), [], Menus::instance()->version(), ['in_footer' => true, 'strategy' => 'defer']);
+        wp_register_script(self::SCRIPT, false, [], Menus::instance()->version(), ['in_footer' => true]);
+        wp_add_inline_script(self::SCRIPT, self::read('assets/help.js'));
+        wp_enqueue_script(self::SCRIPT);
+    }
+
+    /**
+     * Contents of a file of the library, empty when it cannot be read
+     *
+     * @param string $relative Path from the root of the library.
+     *
+     * @return string
+     */
+    public static function read(string $relative): string
+    {
+        $contents = file_get_contents(Menus::instance()->directory() . '/' . $relative);
+
+        return $contents === false ? '' : $contents;
     }
 
     /**

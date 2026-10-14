@@ -8,7 +8,7 @@ A plugin declares a menu, a page under it and its tab. Another plugin declares t
 
 - PHP 8.2 or later
 - WordPress 6.3 or later, in the admin of a site or, for a menu marked `network()`, in the network admin of a multisite
-- The library installed through Composer inside a plugin or a must-use plugin, not a theme: its stylesheet and script are served with `plugins_url()`
+- The library installed through Composer, in a plugin, a must-use plugin or the vendor directory of the site
 
 ## Install
 
